@@ -95,3 +95,26 @@ Với assignment này, mình khuyên bạn nộp:
 - README hướng dẫn build/run
 
 Không nhất thiết phải dockerize Selenium vì RPA thường chạy như một worker riêng. Cách tách API container + RPA worker là kiến trúc thực tế hơn.
+
+
+set up resdis: 
+# Redis Installation and Setup
+
+This project uses Redis as a caching layer to reduce repeated calls to the REST Countries API.
+
+Redis stores API responses temporarily, allowing the application to reuse cached data instead of sending duplicate requests.
+
+---
+
+## 1. Install Redis
+
+### Ubuntu / Linux
+
+Update package list:
+
+```bash
+sudo apt update
+
+sudo apt install redis-server
+
+redis-server --version

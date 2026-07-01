@@ -6,3 +6,5 @@ fastapi
 uvicorn
 selenium 
 openpyxl 
+pytest
+httpx
