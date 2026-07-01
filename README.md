@@ -265,7 +265,11 @@ http://localhost:8000/docs
 # Running the Pipeline
 
 ## SET UP
-make sure you have .env file, which contain AUTHORIZATION_REST_COUNTRIES key. The format should be AUTHORIZATION_REST_COUNTRIES = "rc_live_47K*****37" which take from https://restcountries.com. 
+make sure you have .env file, which contain AUTHORIZATION_REST_COUNTRIES key. The format should be:
+```bash
+AUTHORIZATION_REST_COUNTRIES = "rc_live_47K*****37"
+```
+which take from https://restcountries.com. 
 
 ## Step 1: Run Scraper
 
