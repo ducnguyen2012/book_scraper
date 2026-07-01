@@ -46,3 +46,24 @@ F --> G[Selenium RPA Bot]
 G --> H[Wikipedia]
 
 G --> I[Excel Report]
+
+
+# Setup and Installation Guide
+
+## 1. Install Conda Environment
+
+This project uses **Conda** to manage the Python environment.
+
+If you do not have Conda installed, please download and install the official Conda distribution:
+
+- Anaconda: https://www.anaconda.com/download
+- Miniconda: https://docs.conda.io/projects/miniconda/en/latest/
+
+
+After installation, verify that Conda is available:
+
+```bash
+conda --version
+conda create -n bookscraper python=3.11
+cd book_scraper 
+pip install -r requirements.txt
