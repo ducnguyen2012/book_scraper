@@ -72,7 +72,6 @@ Collected information includes:
 - Rating
 - Availability
 - Product URL
-- Other metadata
 
 
 The scraper also saves raw HTML pages for backup and debugging:
@@ -297,7 +296,7 @@ data/books_with_country.csv
 ## Step 3: Start FastAPI Server
 
 ```bash
-bash run_main.sh
+python run_main.py
 ```
 
 

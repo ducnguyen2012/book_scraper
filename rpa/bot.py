@@ -30,50 +30,42 @@ driver=webdriver.Chrome(
 
 results=[]
 for book in five_star_books:
-    title=book["title"]
-    driver.get(
-        "https://en.wikipedia.org/"
-    )
-    search_button = WebDriverWait(
-        driver,
-        10
-    ).until(
-        EC.element_to_be_clickable(
-            (
-                By.CSS_SELECTOR,
-                ".vector-icon.mw-ui-icon-search.mw-ui-icon-wikimedia-search.cdx-button__icon"
-            )
-        )
-    )
-    search_button.click()
+    title = book["title"]
+
+    url = "https://en.wikipedia.org/wiki/Special:Search"
+
+    driver.get(url)
+
     search_input = WebDriverWait(
         driver,
         10
     ).until(
-        EC.element_to_be_clickable(
+        EC.presence_of_element_located(
             (
                 By.ID,
-                "searchInput"
+                "ooui-php-1"
             )
         )
     )
+
     search_input.send_keys(title)
     search_input.send_keys(Keys.ENTER)
-    time.sleep(2)
-    try:
-        url=driver.current_url
 
-    except:
-       url="No result"
+    WebDriverWait(
+        driver,
+        10
+    ).until(
+        EC.url_contains("wikipedia.org")
+    )
+
+    wikipedia_url = driver.current_url
 
     results.append({
-        "Title":title,
-        "Price":book["price"],
-        "Publisher Country":
-        book["publisher_country"],
-        "Wikipedia URL":url
+        "Title": title,
+        "Price": book["price"],
+        "Publisher Country": book["publisher_country"],
+        "Wikipedia URL": wikipedia_url
     })
-
 driver.quit()
 # Create Excel
 wb=Workbook()
@@ -96,5 +88,5 @@ for r in results:
     ws.append(list(r.values()))
 
 
-wb.save("report.xlsx")
+wb.save("./rpa/report.xlsx")
 logging.info("Report generated")
