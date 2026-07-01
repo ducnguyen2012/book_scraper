@@ -261,35 +261,13 @@ Swagger documentation:
 http://localhost:8000/docs
 ```
 
-
-# Docker Compose Deployment
-
-
-The project supports running FastAPI together with Redis using Docker Compose.
-
-
-Start services:
-
-```bash
-docker compose up --build
-```
-
-
-Services:
-
-| Service | Port |
-|---|---|
-| FastAPI | 8000 |
-| Redis | 6379 |
-
-
 # Running the Pipeline
 
 
 ## Step 1: Run Scraper
 
 ```bash
-python scraper/scraper.py
+bash run_scrapper.sh
 ```
 
 
@@ -305,7 +283,7 @@ html_backup/
 ## Step 2: Enrich Book Data
 
 ```bash
-python scraper/enrich.py
+bash run_add_country.sh
 ```
 
 
@@ -319,7 +297,7 @@ data/books_with_country.csv
 ## Step 3: Start FastAPI Server
 
 ```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000
+bash run_main.sh
 ```
 
 
@@ -344,7 +322,7 @@ Ensure Selenium WebDriver is installed.
 Run:
 
 ```bash
-python rpa/selenium_bot.py
+bash run_rpa.sh
 ```
 
 
@@ -358,7 +336,7 @@ rpa_report.xlsx
 # Submission Outputs
 
 
-The final submission includes:
+The final submission I include:
 
 
 ## Source Code
@@ -409,12 +387,6 @@ Selenium RPA Worker
 ```
 
 
-The RPA bot is not included inside the API container because:
-
-- API and automation tasks have different responsibilities
-- Independent deployment is easier
-- The architecture is closer to real-world automation systems
-
 
 # Technologies Used
 
@@ -434,4 +406,4 @@ The RPA bot is not included inside the API container because:
 
 # Author
 
-Book Scraper Automation System
+ducnguyen2012.work@gmail.com 
