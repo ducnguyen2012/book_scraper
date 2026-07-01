@@ -40,17 +40,15 @@ B --> D[HTML Backup]
 
 C --> E[REST Countries API]
 
-E --> F[Redis Cache]
+E --> F[books_with_country.csv]
 
-F --> G[books_with_country.csv]
+F --> G[FastAPI Backend]
 
-G --> H[FastAPI Backend]
+G --> H[Selenium RPA Bot]
 
-H --> I[Selenium RPA Bot]
+H --> I[Wikipedia]
 
-I --> J[Wikipedia]
-
-I --> K[Excel Report]
+H --> J[Excel Report]
 ```
 
 
@@ -233,7 +231,7 @@ pip install -r requirements.txt
 
 
 The FastAPI backend can be deployed using Docker.
-
+Make sure your docker already start before running these commands
 
 ## Build Docker Image
 
