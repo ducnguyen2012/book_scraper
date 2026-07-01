@@ -67,3 +67,31 @@ conda --version
 conda create -n bookscraper python=3.11
 cd book_scraper 
 pip install -r requirements.txt
+
+
+## Docker Deployment
+
+
+Build image:
+
+```bash
+docker build -t book-scraper-api .
+
+
+run: 
+docker run -p 8000:8000 book-scraper-api
+
+
+
+---
+
+swagger
+http://localhost:8000/docs
+
+Với assignment này, mình khuyên bạn nộp:
+
+- Dockerfile cho FastAPI
+- docker-compose có Redis
+- README hướng dẫn build/run
+
+Không nhất thiết phải dockerize Selenium vì RPA thường chạy như một worker riêng. Cách tách API container + RPA worker là kiến trúc thực tế hơn.

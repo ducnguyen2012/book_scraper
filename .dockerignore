@@ -1,0 +1,14 @@
+.git
+.gitignore
+
+__pycache__
+
+*.pyc
+
+venv
+
+.env
+
+html_backup/*.html
+
+logs/*.log
