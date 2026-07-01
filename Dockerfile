@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 8000
 
 
-CMD ["python3", "run.py"]
+CMD ["python3", "run_main.py"]

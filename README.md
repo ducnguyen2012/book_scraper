@@ -242,10 +242,10 @@ sudo docker build -t book-scraper-api .
 ```
 
 
-## Run Container
+## build docker compose
 
 ```bash
-sudo docker run -p 8000:8000 book-scraper-api
+docker compose up --build
 ```
 
 
