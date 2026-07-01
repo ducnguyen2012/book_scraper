@@ -3,6 +3,7 @@ import pandas as pd
 import random
 import os
 from dotenv import load_dotenv
+import logging
 load_dotenv()
 
 BOOK_FILE = "./data/books.csv"
@@ -16,7 +17,7 @@ def get_countries():
     try: 
         response = requests.get(url, headers=headers)
     except requests.RequestException as e:
-        print(f"Error fetching countries: {e}")
+        logging.info(f"Error fetching countries: {e}")
         return []
 
     data = response.json()
@@ -49,4 +50,4 @@ df.to_csv(
     "./data/books_with_country.csv",
     index=False
 )
-print("Done")
+logging.info("Done")

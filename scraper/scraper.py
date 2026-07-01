@@ -5,11 +5,11 @@ import os
 from urllib.parse import urljoin
 import time
 import logging
-BASE_URL = "https://books.toscrape.com"
 
+BASE_URL = "https://books.toscrape.com"
 CATEGORY_URL = (
     "https://books.toscrape.com/"
-    "catalogue/category/books/travel_2/index.html"
+    "catalogue/category/books/historical-fiction_4/index.html"
 )
 
 # build backup folder if not exists
@@ -58,13 +58,11 @@ def get_product_links(books,url):
     preprocess data to get href.
     """
     result=[]
-
     for book in books:
         link = book.h3.a["href"]
         result.append(
             urljoin(url,link)
         )
-
     return result
 
 def scrape_product_page(url,index):
@@ -74,14 +72,12 @@ def scrape_product_page(url,index):
         logging.error(f"Error fetching in scrape_product_page {url}: {e}")
         return None
     time.sleep(1)
-
     # backup html
     with open(
         f"{BACKUP_DIR}/book_{index}.html",
         "w",
         encoding="utf-8"
     ) as f:
-
         f.write(response.text)
 
     soup=BeautifulSoup(
@@ -146,4 +142,4 @@ df.to_csv(
     index=False
 )
 
-print(f"Done! {len(df)} books scraped")
+logging.info(f"Done! {len(df)} books scraped")

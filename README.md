@@ -147,15 +147,15 @@ book_scraper/
 │
 ├── scraper/
 │   ├── scraper.py
-│   ├── enrich.py
-│   └── html_backup/
 │
 ├── api/
 │   ├── main.py
-│   └── models.py
+│   └── run.py
 │
 ├── rpa/
-│   └── selenium_bot.py
+│   └── bot.py
+|   └── Dockerfile.py
+|   └── report.xlsx
 │
 ├── data/
 │   ├── books.csv

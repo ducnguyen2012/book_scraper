@@ -5,31 +5,23 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-
+import logging
 from openpyxl import Workbook
 
 API="http://localhost:8000/books"
 
-# =====================
-# Get books from API
-# =====================
-
+# get all books from local API
 books=requests.get(API).json()
 
+# filter 5 stars
 five_star_books=[
     b for b in books
     if b["rating"]==5
 ]
 
-print(f"len five_star_books: {len(five_star_books)}")
+logging.info(f"len five_star_books: {len(five_star_books)}")
 
-
-
-# =====================
 # Browser setup
-# =====================
-
-
 options=webdriver.ChromeOptions()
 
 driver=webdriver.Chrome(
@@ -37,17 +29,14 @@ driver=webdriver.Chrome(
 )
 
 results=[]
-
 for book in five_star_books:
     title=book["title"]
-
-
     driver.get(
         "https://en.wikipedia.org/"
     )
     search_button = WebDriverWait(
         driver,
-        5
+        10
     ).until(
         EC.element_to_be_clickable(
             (
@@ -56,9 +45,7 @@ for book in five_star_books:
             )
         )
     )
-
     search_button.click()
-
     search_input = WebDriverWait(
         driver,
         10
@@ -70,83 +57,44 @@ for book in five_star_books:
             )
         )
     )
-
-
     search_input.send_keys(title)
     search_input.send_keys(Keys.ENTER)
-
-
     time.sleep(2)
-
-
-
     try:
-
         url=driver.current_url
 
-
     except:
-
-        url="No result"
-
-
+       url="No result"
 
     results.append({
-
         "Title":title,
-
         "Price":book["price"],
-
         "Publisher Country":
         book["publisher_country"],
-
-        "Wikipedia URL":
-        url
-
+        "Wikipedia URL":url
     })
 
-
-
 driver.quit()
-
-
-
-# =====================
 # Create Excel
-# =====================
-
-
 wb=Workbook()
 
 ws=wb.active
 
 ws.title="Report"
-
-
-
 ws.append(
-[
-"Title",
-"Price",
-"Publisher Country",
-"Wikipedia URL"
-]
+    [
+        "Title",
+        "Price",
+        "Publisher Country",
+        "Wikipedia URL"
+    ]
 )
 
 
 
 for r in results:
-
-    ws.append(
-        list(r.values())
-    )
+    ws.append(list(r.values()))
 
 
-wb.save(
-    "report.xlsx"
-)
-
-
-print(
-"Report generated"
-)
+wb.save("report.xlsx")
+logging.info("Report generated")
