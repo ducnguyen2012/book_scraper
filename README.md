@@ -177,7 +177,7 @@ book_scraper/
 ## 1. Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ducnguyen2012/book_scraper.git
 
 cd book_scraper
 ```
@@ -231,7 +231,11 @@ pip install -r requirements.txt
 
 
 The FastAPI backend can be deployed using Docker.
-Make sure your docker already start before running these commands
+```bash
+#! Make sure your docker already start before running these commands 
+#! Make sure you already set up .env as mention in [Setup](#SET UP)
+```
+
 
 ## Build Docker Image
 
