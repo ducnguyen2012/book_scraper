@@ -13,9 +13,12 @@ CATEGORY_URL = (
 )
 
 # build backup folder if not exists
-BACKUP_DIR = "./book_scraper/html_backup"
+BACKUP_DIR = "./html_backup"
 if not os.path.exists(BACKUP_DIR):
     os.makedirs(BACKUP_DIR)
+LOG_DIR = "./log/"
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -111,7 +114,7 @@ def scrape_product_page(url,index):
 
 # =========== running main function ==============
 books_data=[]
-for page in range(1,4):
+for page in range(1,4): # make sure at least 3 pages is scrapped
     logging.info(f"Page {page}")
     if page==1:
         # first page dont have page_num in url
@@ -139,7 +142,7 @@ df=pd.DataFrame(
     books_data
 )
 df.to_csv(
-    "./book_scraper/data/books.csv",
+    "./data/books.csv",
     index=False
 )
 

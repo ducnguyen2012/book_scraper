@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-BOOK_FILE = "./book_scraper/data/books.csv"
+BOOK_FILE = "./data/books.csv"
 
 def get_countries():
 
@@ -32,7 +32,10 @@ def get_countries():
     return countries
 
 countries=get_countries()
-
+if not countries:
+    raise ValueError(
+        "Country list is empty!"
+    )
 df=pd.read_csv(
     BOOK_FILE
 )
@@ -43,7 +46,7 @@ df["publisher_country"] = [
 ]
 
 df.to_csv(
-    "./book_scraper/data/books_with_country.csv",
+    "./data/books_with_country.csv",
     index=False
 )
 print("Done")

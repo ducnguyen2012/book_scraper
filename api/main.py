@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import pandas as pd
 
 
-FILE="../data/books_with_country.csv"
+FILE="./data/books_with_country.csv"
 
 app=FastAPI()
 books=pd.read_csv(FILE)

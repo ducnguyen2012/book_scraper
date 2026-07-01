@@ -64,7 +64,7 @@ After installation, verify that Conda is available:
 
 ```bash
 conda --version
-conda create -n bookscraper python=3.11
+conda create -n bookscraper python=3.11 -y
 cd book_scraper 
 pip install -r requirements.txt
 
@@ -75,11 +75,11 @@ pip install -r requirements.txt
 Build image:
 
 ```bash
-docker build -t book-scraper-api .
+sudo docker build -t book-scraper-api .
 
 
 run: 
-docker run -p 8000:8000 book-scraper-api
+sudo docker run -p 8000:8000 book-scraper-api
 
 
 
@@ -118,3 +118,5 @@ sudo apt update
 sudo apt install redis-server
 
 redis-server --version
+
+hãy đảm bảo bạn đã cd vào folder book_scraper.

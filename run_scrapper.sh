@@ -1,3 +1,3 @@
 #! /bin/bash
-echo "Running scrapper tests..."
-python3 book_scraper/scraper/scraper.py
+echo "Running scrapper..."
+python3 scraper/scraper.py
