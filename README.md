@@ -225,54 +225,6 @@ pip install -r requirements.txt
 ```
 
 
-# Redis Setup
-
-
-Redis is used as a caching layer for REST Countries API responses.
-
-
-## Install Redis on Ubuntu/Linux
-
-Update package list:
-
-```bash
-sudo apt update
-```
-
-
-Install Redis:
-
-```bash
-sudo apt install redis-server
-```
-
-
-Check Redis version:
-
-```bash
-redis-server --version
-```
-
-
-Start Redis service:
-
-```bash
-sudo systemctl start redis
-```
-
-
-Verify Redis:
-
-```bash
-redis-cli ping
-```
-
-Expected output:
-
-```
-PONG
-```
-
 
 # Docker Deployment
 
