@@ -163,7 +163,11 @@ book_scraper/
 ├── tests/
 │
 ├── Dockerfile
-├── docker-compose.yml
+├── .Dockerignore
+├── run_add_country.sh
+├── run_main.py
+├── run_rpa.sh
+├── run_scrapper.sh
 ├── requirements.txt
 └── README.md
 ```
@@ -262,6 +266,8 @@ http://localhost:8000/docs
 
 # Running the Pipeline
 
+## SET UP
+make sure you have .env file, which contain AUTHORIZATION_REST_COUNTRIES key. The format should be AUTHORIZATION_REST_COUNTRIES = "rc_live_47K*****37" which take from https://restcountries.com
 
 ## Step 1: Run Scraper
 
@@ -321,6 +327,8 @@ Ensure Selenium WebDriver is installed.
 Run:
 
 ```bash
+python run_main.py
+# after that, turn on another terminal and run:
 bash run_rpa.sh
 ```
 
