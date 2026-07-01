@@ -267,7 +267,7 @@ http://localhost:8000/docs
 # Running the Pipeline
 
 ## SET UP
-make sure you have .env file, which contain AUTHORIZATION_REST_COUNTRIES key. The format should be AUTHORIZATION_REST_COUNTRIES = "rc_live_47K*****37" which take from https://restcountries.com
+make sure you have .env file, which contain AUTHORIZATION_REST_COUNTRIES key. The format should be AUTHORIZATION_REST_COUNTRIES = "rc_live_47K*****37" which take from https://restcountries.com. 
 
 ## Step 1: Run Scraper
 
@@ -327,8 +327,9 @@ Ensure Selenium WebDriver is installed.
 Run:
 
 ```bash
+# turn on the first terminal and run below command. It will run service book-scraper and rpa will take information from API route. 
 python run_main.py
-# after that, turn on another terminal and run:
+# after that, turn on the second terminal and run:
 bash run_rpa.sh
 ```
 
@@ -405,7 +406,6 @@ Selenium RPA Worker
 | Backend Framework | FastAPI |
 | API Documentation | Swagger |
 | Browser Automation | Selenium |
-| Cache | Redis |
 | Containerization | Docker |
 | Data Processing | Pandas |
 | Excel Generation | OpenPyXL |
