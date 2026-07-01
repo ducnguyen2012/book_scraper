@@ -1,31 +1,32 @@
 # Book Scraper Automation System
 
-An end-to-end automation project that combines:
+An end-to-end automation system that combines:
 
 - Web Scraping & Crawling
-- External API Integration
-- REST API Development
-- RPA Browser Automation
+- External REST API Integration
+- REST API Development with FastAPI
+- RPA Browser Automation with Selenium
 - Automated Report Generation
+- Docker Deployment
+- Redis Caching
 
 
-## System Overview
+# System Overview
 
-The system performs the following pipeline:
+This project implements an automated pipeline for collecting, processing, enriching, and reporting book information.
 
-1. Scrape books from `https://books.toscrape.com`
-2. Save book information and HTML backup
-3. Enrich book data with random publisher country using REST Countries API
-4. Provide book data through FastAPI REST API
-5. Use Selenium RPA bot to:
-   - Consume the API
-   - Filter 5-star books
-   - Search books on Wikipedia
-   - Generate Excel report
+The system workflow:
+
+1. Scrape book information from `https://books.toscrape.com`
+2. Store collected data and raw HTML backup files
+3. Enrich book information with country data using REST Countries API
+4. Cache external API responses using Redis
+5. Provide processed data through FastAPI REST API
+6. Use Selenium RPA bot to consume API data
+7. Filter 5-star books, search information on Wikipedia, and generate Excel reports
 
 
-## Architecture
-
+# Architecture
 
 ```mermaid
 flowchart LR
@@ -35,88 +36,450 @@ A[Books To Scrape Website]
 
 B --> C[books.csv]
 
-C --> D[REST Countries API]
+B --> D[HTML Backup]
 
-D --> E[books_with_country.csv]
+C --> E[REST Countries API]
 
-E --> F[FastAPI Backend]
+E --> F[Redis Cache]
 
-F --> G[Selenium RPA Bot]
+F --> G[books_with_country.csv]
 
-G --> H[Wikipedia]
+G --> H[FastAPI Backend]
 
-G --> I[Excel Report]
+H --> I[Selenium RPA Bot]
 
+I --> J[Wikipedia]
 
-# Setup and Installation Guide
-
-## 1. Install Conda Environment
-
-This project uses **Conda** to manage the Python environment.
-
-If you do not have Conda installed, please download and install the official Conda distribution:
-
-- Anaconda: https://www.anaconda.com/download
-- Miniconda: https://docs.conda.io/projects/miniconda/en/latest/
+I --> K[Excel Report]
+```
 
 
-After installation, verify that Conda is available:
+# Features
+
+
+## 1. Web Scraping
+
+The scraper collects book information from:
+
+```
+https://books.toscrape.com
+```
+
+Collected information includes:
+
+- Book title
+- Price
+- Rating
+- Availability
+- Product URL
+- Other metadata
+
+
+The scraper also saves raw HTML pages for backup and debugging:
+
+```
+html_backup/
+```
+
+
+## 2. Data Enrichment
+
+The scraped dataset is enriched with country information using:
+
+```
+REST Countries API
+```
+
+Redis is used as a caching layer to:
+
+- Reduce repeated API requests
+- Improve response time
+- Avoid unnecessary external API calls
+
+
+The output file:
+
+```
+books_with_country.csv
+```
+
+
+## 3. FastAPI REST API
+
+The backend provides book information through REST endpoints.
+
+API documentation:
+
+```
+http://localhost:8000/docs
+```
+
+
+Example endpoint:
+
+```
+GET /books
+```
+
+
+## 4. Selenium RPA Automation
+
+The RPA bot performs the following tasks:
+
+1. Consume book data from FastAPI
+2. Filter books with 5-star rating
+3. Search book information on Wikipedia
+4. Generate an Excel report
+
+
+Generated output:
+
+```
+rpa_report.xlsx
+```
+
+
+# Project Structure
+
+```
+book_scraper/
+
+│
+├── scraper/
+│   ├── scraper.py
+│   ├── enrich.py
+│   └── html_backup/
+│
+├── api/
+│   ├── main.py
+│   └── models.py
+│
+├── rpa/
+│   └── selenium_bot.py
+│
+├── data/
+│   ├── books.csv
+│   └── books_with_country.csv
+│
+├── tests/
+│
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+└── README.md
+```
+
+
+# Installation Guide
+
+
+## 1. Clone Repository
+
+```bash
+git clone <repository-url>
+
+cd book_scraper
+```
+
+Make sure you are inside the project folder before running commands.
+
+
+## 2. Create Conda Environment
+
+This project uses Conda for environment management.
+
+Install Conda:
+
+- Anaconda:
+https://www.anaconda.com/download
+
+- Miniconda:
+https://docs.conda.io/projects/miniconda/en/latest/
+
+
+Check Conda installation:
 
 ```bash
 conda --version
-conda create -n bookscraper python=3.11 -y
-cd book_scraper 
-pip install -r requirements.txt
+```
 
 
-## Docker Deployment
-
-
-Build image:
+Create environment:
 
 ```bash
-sudo docker build -t book-scraper-api .
+conda create -n bookscraper python=3.11 -y
+```
 
 
-run: 
-sudo docker run -p 8000:8000 book-scraper-api
+Activate environment:
+
+```bash
+conda activate bookscraper
+```
 
 
+Install dependencies:
 
----
-
-swagger
-http://localhost:8000/docs
-
-Với assignment này, mình khuyên bạn nộp:
-
-- Dockerfile cho FastAPI
-- docker-compose có Redis
-- README hướng dẫn build/run
-
-Không nhất thiết phải dockerize Selenium vì RPA thường chạy như một worker riêng. Cách tách API container + RPA worker là kiến trúc thực tế hơn.
+```bash
+pip install -r requirements.txt
+```
 
 
-set up resdis: 
-# Redis Installation and Setup
+# Redis Setup
 
-This project uses Redis as a caching layer to reduce repeated calls to the REST Countries API.
 
-Redis stores API responses temporarily, allowing the application to reuse cached data instead of sending duplicate requests.
+Redis is used as a caching layer for REST Countries API responses.
 
----
 
-## 1. Install Redis
-
-### Ubuntu / Linux
+## Install Redis on Ubuntu/Linux
 
 Update package list:
 
 ```bash
 sudo apt update
+```
 
+
+Install Redis:
+
+```bash
 sudo apt install redis-server
+```
 
+
+Check Redis version:
+
+```bash
 redis-server --version
+```
 
-hãy đảm bảo bạn đã cd vào folder book_scraper.
+
+Start Redis service:
+
+```bash
+sudo systemctl start redis
+```
+
+
+Verify Redis:
+
+```bash
+redis-cli ping
+```
+
+Expected output:
+
+```
+PONG
+```
+
+
+# Docker Deployment
+
+
+The FastAPI backend can be deployed using Docker.
+
+
+## Build Docker Image
+
+Run from the project root:
+
+```bash
+sudo docker build -t book-scraper-api .
+```
+
+
+## Run Container
+
+```bash
+sudo docker run -p 8000:8000 book-scraper-api
+```
+
+
+The API will be available at:
+
+```
+http://localhost:8000
+```
+
+
+Swagger documentation:
+
+```
+http://localhost:8000/docs
+```
+
+
+# Docker Compose Deployment
+
+
+The project supports running FastAPI together with Redis using Docker Compose.
+
+
+Start services:
+
+```bash
+docker compose up --build
+```
+
+
+Services:
+
+| Service | Port |
+|---|---|
+| FastAPI | 8000 |
+| Redis | 6379 |
+
+
+# Running the Pipeline
+
+
+## Step 1: Run Scraper
+
+```bash
+python scraper/scraper.py
+```
+
+
+Generated files:
+
+```
+data/books.csv
+
+html_backup/
+```
+
+
+## Step 2: Enrich Book Data
+
+```bash
+python scraper/enrich.py
+```
+
+
+Generated file:
+
+```
+data/books_with_country.csv
+```
+
+
+## Step 3: Start FastAPI Server
+
+```bash
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+
+
+API:
+
+```
+http://localhost:8000
+```
+
+
+Swagger UI:
+
+```
+http://localhost:8000/docs
+```
+
+
+## Step 4: Run RPA Bot
+
+Ensure Selenium WebDriver is installed.
+
+Run:
+
+```bash
+python rpa/selenium_bot.py
+```
+
+
+Generated report:
+
+```
+rpa_report.xlsx
+```
+
+
+# Submission Outputs
+
+
+The final submission includes:
+
+
+## Source Code
+
+Complete source code available through GitHub repository.
+
+
+## Scraped Data
+
+```
+books.csv
+```
+
+
+## Enriched Data
+
+```
+books_with_country.csv
+```
+
+
+## HTML Backup
+
+```
+html_backup/
+```
+
+
+## RPA Generated Report
+
+```
+rpa_report.xlsx
+```
+
+
+# Design Decision
+
+
+The system separates the FastAPI backend and Selenium RPA worker.
+
+Architecture:
+
+```
+FastAPI Backend
+        |
+        |
+Selenium RPA Worker
+```
+
+
+The RPA bot is not included inside the API container because:
+
+- API and automation tasks have different responsibilities
+- Independent deployment is easier
+- The architecture is closer to real-world automation systems
+
+
+# Technologies Used
+
+
+| Component | Technology |
+|---|---|
+| Programming Language | Python 3.11 |
+| Web Scraping | BeautifulSoup, Requests |
+| Backend Framework | FastAPI |
+| API Documentation | Swagger |
+| Browser Automation | Selenium |
+| Cache | Redis |
+| Containerization | Docker |
+| Data Processing | Pandas |
+| Excel Generation | OpenPyXL |
+
+
+# Author
+
+Book Scraper Automation System
