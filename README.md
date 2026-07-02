@@ -162,6 +162,7 @@ book_scraper/
 │
 ├── Dockerfile
 ├── .Dockerignore
+├── .env
 ├── run_add_country.sh
 ├── run_main.py
 ├── run_rpa.sh
